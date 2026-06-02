@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="云平时">
+<meta name="theme-color" content="#FDF8F0">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<title>咸粥楸芊·云平时</title>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ft:'ZCOOL XiaoWei','Noto Serif SC','PingFang SC',serif;
+  --fb:'Noto Serif SC','PingFang SC','SimSun',serif;
+  --bg:#FDF8F0;--text:#3A3632;--muted:#918A7E;--light:#C4BFB5;--faint:#E5E0D8;--border:#EBE7DF;--card:#FFFFFF;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{height:-webkit-fill-available;}
+body{font-family:var(--fb);color:var(--text);background:var(--bg);min-height:100vh;min-height:-webkit-fill-available;
+  -webkit-font-smoothing:antialiased;overscroll-behavior-y:none;padding-bottom:calc(64px + var(--safe-b));}
+button{font-family:var(--fb);cursor:pointer;border:none;background:none;-webkit-appearance:none;}
+textarea,input{font-family:var(--fb);-webkit-appearance:none;}
+input[type=date]{font-size:14px;padding:10px 12px;border:1px solid var(--faint);border-radius:10px;background:#fff;color:var(--text);width:100%;}
+input[type=text]{width:100%;border:1px solid var(--faint);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--text);outline:none;background:#fff;}
+.app{max-width:520px;margin:0 auto;padding:0 18px 20px;}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;background:rgba(253,248,240,0.95);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);
+  padding:6px 0 calc(6px + var(--safe-b));z-index:100;}
+.tabs button{flex:1;max-width:90px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;
+  font-size:10px;color:var(--light);letter-spacing:1px;transition:color 0.2s;}
+.tabs button.active{color:var(--text);}
+.tabs button .ico{font-size:20px;line-height:1;}
+.tabs button:active{transform:scale(0.92);}
+.hdr{text-align:center;padding:calc(env(safe-area-inset-top,12px) + 24px) 0 16px;}
+.hdr-title{font-size:26px;letter-spacing:8px;font-family:var(--ft);color:var(--text);}
+.hdr-sub{font-size:11px;color:var(--light);letter-spacing:3px;margin-top:2px;}
+.avatars{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:8px 0 20px;}
+.avatar{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.av-name{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.av-picker{display:flex;gap:8px;flex-wrap:wrap;padding:8px 0;}
+.av-pick{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;border-radius:10px;border:2px solid transparent;transition:all 0.15s;}
+.av-pick.sel{border-color:var(--text);background:rgba(0,0,0,0.03);}
+.av-pick:active{transform:scale(0.9);}
+.sec-cards{display:flex;flex-direction:column;gap:10px;padding-bottom:12px;}
+.sec-card{display:flex;align-items:center;gap:14px;padding:16px;background:var(--card);border-radius:14px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.04);cursor:pointer;transition:transform 0.12s;border:1px solid var(--border);}
+.sec-card:active{transform:scale(0.97);}
+.sec-ico{font-size:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:12px;flex-shrink:0;}
+.sec-label{font-size:16px;font-family:var(--ft);letter-spacing:2px;}
+.sec-desc{font-size:11px;color:var(--light);margin-top:1px;}
+.sec-count{font-size:11px;color:var(--light);margin-left:auto;flex-shrink:0;}
+.page-title{font-size:22px;font-family:var(--ft);letter-spacing:4px;text-align:center;padding:20px 0 4px;}
+.page-desc{font-size:12px;color:var(--light);text-align:center;margin-bottom:8px;letter-spacing:2px;}
+.values{text-align:center;padding:28px 0 12px;}
+.values span{font-size:11px;color:var(--faint);letter-spacing:4px;font-family:var(--ft);font-style:italic;}
+.date-filter{display:flex;align-items:center;justify-content:center;gap:12px;padding:4px 0 14px;}
+.date-filter .arrow{font-size:18px;color:var(--light);padding:6px 10px;border-radius:8px;}
+.date-filter .arrow:active{background:rgba(0,0,0,0.04);}
+.date-filter .dt{font-size:13px;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:6px;position:relative;}
+.date-filter .dt:active{background:rgba(0,0,0,0.03);}
+.date-filter .dt input{position:absolute;opacity:0;width:1px;height:1px;top:0;left:50%;}
+.date-filter .reset{font-size:11px;color:#D4896A;padding:4px 8px;}
+.entries{display:flex;flex-direction:column;gap:10px;padding-bottom:80px;}
+.entry{background:var(--card);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,0.03);border:1px solid var(--border);}
+.entry-date{font-size:11px;color:var(--light);}
+.entry-text{font-size:14px;line-height:1.8;margin-top:4px;white-space:pre-wrap;}
+.entry-who{display:flex;gap:4px;margin-top:8px;align-items:center;flex-wrap:wrap;}
+.entry-meta{display:flex;justify-content:space-between;align-items:center;}
+.entry-del{font-size:11px;color:var(--faint);padding:4px 8px;}
+.entry-del:active{color:#D4896A;}
+.stars{display:inline-flex;gap:2px;}
+.stars .star{font-size:16px;cursor:pointer;padding:2px;color:var(--faint);}
+.stars .star.on{color:#CFA034;}
+.stars-display{color:#CFA034;font-size:13px;letter-spacing:1px;}
+.sticky{border-radius:4px 14px 14px 14px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,0.05);border:none;min-height:70px;}
+.wish-done{opacity:0.55;}
+.wish-done .entry-text{text-decoration:line-through;}
+.wish-check{font-size:18px;padding:4px 8px;border-radius:8px;}
+.wish-check:active{transform:scale(1.2);}
+.photos{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.photos img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--border);}
+.photo-add{width:72px;height:72px;border-radius:8px;border:2px dashed var(--faint);display:flex;align-items:center;
+  justify-content:center;font-size:22px;color:var(--light);cursor:pointer;flex-shrink:0;}
+.photo-add:active{background:rgba(0,0,0,0.03);}
+.chengtrue{margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);}
+.chengtrue-label{font-size:11px;color:var(--light);letter-spacing:2px;margin-bottom:6px;font-family:var(--ft);}
+.fab{position:fixed;bottom:calc(76px + var(--safe-b));right:calc(50% - 240px);width:52px;height:52px;border-radius:26px;
+  background:var(--text);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(0,0,0,0.15);z-index:90;transition:transform 0.15s;}
+.fab:active{transform:scale(0.9);}
+@media(max-width:520px){.fab{right:20px;}}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:200;display:flex;align-items:flex-end;justify-content:center;}
+.modal{background:var(--bg);border-radius:20px 20px 0 0;width:100%;max-width:520px;padding:24px 20px calc(24px + var(--safe-b));
+  max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.modal-title{font-size:18px;font-family:var(--ft);letter-spacing:3px;text-align:center;margin-bottom:16px;}
+.field{margin-bottom:14px;}
+.field label{font-size:12px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;}
+.field textarea{width:100%;min-height:60px;border:1px solid var(--faint);border-radius:10px;padding:10px 12px;
+  font-size:14px;color:var(--text);resize:vertical;outline:none;background:#fff;line-height:1.7;}
+.btn-row{display:flex;gap:10px;margin-top:18px;}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:14px;letter-spacing:2px;font-family:var(--ft);text-align:center;}
+.btn-primary{background:var(--text);color:#fff;}.btn-primary:active{opacity:0.8;}
+.btn-cancel{background:var(--faint);color:var(--muted);}
+.empty{text-align:center;padding:60px 20px;color:var(--light);font-size:13px;letter-spacing:2px;}
+.rpt-nav{display:flex;justify-content:center;gap:14px;padding:0 0 14px;}
+.rpt-nav button{font-size:13px;padding:4px 0;letter-spacing:2px;border-bottom:1.5px solid transparent;color:var(--light);}
+.rpt-nav button.active{color:var(--text);border-bottom-color:var(--text);}
+.rpt-pre{font-size:12px;line-height:1.9;color:#666;background:#F8F6F1;padding:18px;border-radius:12px;white-space:pre-wrap;
+  word-break:break-word;border:1px solid #EBE7DF;max-height:400px;overflow-y:auto;font-family:var(--fb);}
+.rpt-copy{display:block;width:100%;margin-top:14px;padding:14px 0;background:var(--text);color:#F5F3EE;border-radius:12px;
+  font-size:14px;font-family:var(--ft);letter-spacing:4px;transition:background 0.3s;}
+.rpt-copy.ok{background:#6B9E6B;}
+.data-sec{margin-top:24px;padding-top:20px;border-top:1px solid var(--border);text-align:center;}
+.data-sec .dt-title{font-size:13px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;font-family:var(--ft);}
+.data-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.data-btn{padding:10px 18px;border-radius:10px;font-size:12px;letter-spacing:1px;background:#F0EDE8;color:var(--text);}
+.data-btn:active{opacity:0.7;}
+.data-btn.del{background:none;color:var(--light);font-size:11px;}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<nav class="tabs" id="tabs">
+  <button data-t="home" onclick="go('home')"><span class="ico">🏠</span>首页</button>
+  <button data-t="read" onclick="go('read')"><span class="ico">📖</span>共读</button>
+  <button data-t="share" onclick="go('share')"><span class="ico">📝</span>在目</button>
+  <button data-t="move" onclick="go('move')"><span class="ico">🚲</span>动动</button>
+  <button data-t="make" onclick="go('make')"><span class="ico">🍞</span>劳作</button>
+  <button data-t="wish" onclick="go('wish')"><span class="ico">🌊</span>愿望</button>
+</nav>
+<input type="file" id="imp-f" accept=".json" style="display:none">
+
+<script>
+/* ══ FAMILY ══ */
+const FM=[
+  {id:'mama',name:'咸蛋妈妈',nick:'妈妈',c:'#E8927C',ch:'咸',badge:'🥚'},
+  {id:'baba',name:'粥爸爸',nick:'爸爸',c:'#D4A84B',ch:'粥',badge:'🥣'},
+  {id:'jj',name:'芊姐姐',nick:'早点',c:'#7BAE7F',ch:'芊',badge:'🌿'},
+  {id:'mm',name:'楸妹妹',nick:'楸楸',c:'#E8B4B8',ch:'楸',badge:'🌸'},
+  {id:'nn',name:'云奶奶',nick:'奶奶',c:'#89B4C8',ch:'云',badge:'☁️'},
+  {id:'yy',name:'平爷爷',nick:'爷爷',c:'#A0846B',ch:'平',badge:'⛰️'},
+];
+const gFM=id=>FM.find(f=>f.id===id)||FM[0];
+
+/* ── circle avatar ── */
+function circleSvg(color,ch,size,badge){
+  const fs=Math.round(size*0.32),r=size/2;
+  let s=`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.08))">
+    <circle cx="${r}" cy="${r}" r="${r}" fill="${color}"/>
+    <text x="${r}" y="${r+fs*0.35}" text-anchor="middle" fill="#fff" font-size="${fs}" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">${ch}</text>`;
+  if(badge)s+=`<text x="${size*0.78}" y="${size*0.92}" text-anchor="middle" font-size="${Math.round(size*0.22)}">${badge}</text>`;
+  s+=`</svg>`;return s;
+}
+const avBig=f=>`<div>${circleSvg(f.c,f.ch,48,f.badge)}</div><div class="av-name">${f.nick}</div>`;
+const avSm=(f,sz=28)=>circleSvg(f.c,f.ch,sz);
+const avPick=(f,sz=34)=>circleSvg(f.c,f.ch,sz);
+
+/* ══ SECTIONS ══ */
+const SECS=[
+  {id:'read',ico:'📖',label:'芊楸共读',desc:'记录阅读',key:'xz_read'},
+  {id:'share',ico:'📝',label:'历历在目',desc:'记录输出与分享',key:'xz_share'},
+  {id:'move',ico:'🚲',label:'一起动动',desc:'记录家庭玩耍地图',key:'xz_move'},
+  {id:'make',ico:'🍞',label:'一起劳作',desc:'记录家庭身体力行',key:'xz_make'},
+  {id:'wish',ico:'🌊',label:'愿望池塘',desc:'记录每个人的愿望',key:'xz_wish'},
+];
+const gSec=id=>SECS.find(s=>s.id===id);
+const load=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return[];}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const fmtD=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const today=()=>fmtD(new Date());
+const parseD=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);};
+const shiftD=(s,n)=>{const d=parseD(s);d.setDate(d.getDate()+n);return fmtD(d);};
+const WK=['日','一','二','三','四','五','六'];
+const fmtCN=s=>{const d=parseD(s);return`${d.getMonth()+1}月${d.getDate()}日·${WK[d.getDay()]}`;};
+const fmtMon=(y,m)=>`${y}年${m}月`;
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const esc=s=>(s||'').replace(/</g,'&lt;');
+const $=s=>document.querySelector(s);const $$=s=>document.querySelectorAll(s);
+const starsH=n=>'★'.repeat(n)+'☆'.repeat(5-n);
+const VALUES=`<div class="values"><span>Love · Hope · Respect</span></div>`;
+
+let view='home',modal=null,formData={},filterDate=null,rptType='week';
+function go(v){view=v;modal=null;filterDate=null;render();window.scrollTo(0,0);}
+
+/* ══ PHOTOS ══ */
+function resizeImg(file,maxW=400){
+  return new Promise(res=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{
+    const c=document.createElement('canvas');const ratio=Math.min(maxW/img.width,maxW/img.height,1);
+    c.width=img.width*ratio;c.height=img.height*ratio;c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    res(c.toDataURL('image/jpeg',0.65));};img.src=e.target.result;};r.readAsDataURL(file);});}
+
+async function pickPhotosFor(target,max=5){
+  const input=document.createElement('input');input.type='file';input.accept='image/*';input.multiple=true;
+  input.onchange=async e=>{const files=[...e.target.files].slice(0,max-target.length);
+    for(const f of files){target.push(await resizeImg(f));}
+    if(modal)rModal();else render();};input.click();}
+
+/* ══ REPORTS ══ */
+function weekDates(ref){const d=parseD(ref||today()),day=d.getDay(),mon=new Date(d);mon.setDate(d.getDate()-(day===0?6:day-1));
+  const a=[];for(let i=0;i<7;i++){const x=new Date(mon);x.setDate(mon.getDate()+i);a.push(fmtD(x));}return a;}
+function monDates(y,m){const n=new Date(y,m,0).getDate(),a=[];for(let i=1;i<=n;i++)a.push(`${y}-${String(m).padStart(2,'0')}-${String(i).padStart(2,'0')}`);return a;}
+function genReport(dates,title){
+  let r=`# 咸粥楸芊·云平时 · ${title}\n${dates[0]} 至 ${dates[dates.length-1]}\n\n`;
+  SECS.forEach(sec=>{const all=load(sec.key).filter(e=>dates.includes(e.date));if(!all.length)return;
+    r+=`## ${sec.ico} ${sec.label}\n`;
+    all.sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{
+      r+=`${fmtCN(e.date)} `;
+      if(sec.id==='read'){const rd=(e.who||[]).map(id=>gFM(id).nick).join('、'),li=(e.listener||[]).map(id=>gFM(id).nick).join('、');
+        r+=`${rd}读${e.book?'《'+e.book+'》':''} ${e.minutes||''}分钟`;if(li)r+=` → ${li}听`;if(e.rating)r+=` ${'★'.repeat(e.rating)}`;r+=`\n`;
+        if(e.comment)r+=`  想说：${e.comment}\n`;
+      }else if(sec.id==='share'){r+=`${gFM(e.who).nick}：${e.text}\n`;
+      }else if(sec.id==='wish'){r+=`${gFM(e.who).nick}许愿：${e.text}${e.done?' ✅':' ✨'}\n`;
+      }else{const who=(e.who||[]).map(id=>gFM(id).nick).join('、');r+=`${who}`;if(e.where)r+=` 📍${e.where}`;r+=`\n  ${e.text||''}`;if(e.note)r+=`\n  记录：${e.note}`;r+=`\n`;}});r+=`\n`;});
+  r+=`---\nLove · Hope · Respect\n`;return r;}
+
+/* ══ RENDER ══ */
+function render(){$$('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.t===view));
+  const app=$('#app');if(view==='home')return rHome(app);if(view==='report')return rReport(app);const sec=gSec(view);if(sec)rSec(app,sec);}
+
+function rHome(el){
+  let h=`<div class="hdr"><div class="hdr-title">咸粥楸芊·云平时</div><div class="hdr-sub">六一快乐 · 2026</div></div>`;
+  h+=`<div class="avatars">${FM.map(f=>`<div class="avatar">${avBig(f)}</div>`).join('')}</div>`;
+  h+=`<div class="sec-cards">`;
+  SECS.forEach(s=>{const ct=load(s.key).length;
+    h+=`<div class="sec-card" onclick="go('${s.id}')"><div class="sec-ico">${s.ico}</div><div><div class="sec-label">${s.label}</div><div class="sec-desc">${s.desc}</div></div><div class="sec-count">${ct?ct+'条':''}</div></div>`;});
+  h+=`<div class="sec-card" onclick="go('report')"><div class="sec-ico">📊</div><div><div class="sec-label">日积月累</div><div class="sec-desc">导出记录Hi Ai</div></div></div>`;
+  h+=`</div>`;h+=VALUES;
+  h+=`<div class="data-sec"><div class="dt-title">数据管理</div><div class="data-btns">
+    <button class="data-btn" onclick="exportAll()">导出数据</button>
+    <button class="data-btn" onclick="$('#imp-f').click()">导入数据</button>
+    <button class="data-btn del" onclick="clearAll()">清除</button></div></div>`;
+  el.innerHTML=h;}
+
+function rSec(el,sec){
+  let data=load(sec.key);if(filterDate)data=data.filter(e=>e.date===filterDate);
+  data.sort((a,b)=>b.date.localeCompare(a.date));
+  const fd=filterDate||today(),canFwd=!filterDate||shiftD(fd,1)<=today();
+  let h=`<div class="page-title">${sec.ico} ${sec.label}</div><div class="page-desc">${sec.desc}</div>`;
+  h+=`<div class="date-filter"><button class="arrow" onclick="filterDate='${shiftD(fd,-1)}';render()">‹</button>
+    <div class="dt" onclick="this.querySelector('input').showPicker?.()||this.querySelector('input').focus()">
+      ${filterDate?fmtCN(filterDate):'全部日期'}<input type="date" value="${filterDate||''}" max="${today()}" onchange="filterDate=this.value||null;render()"></div>
+    <button class="arrow" ${canFwd?`onclick="filterDate='${shiftD(fd,1)}';render()"`:''} style="${canFwd?'':'opacity:0.3'}">›</button>
+    ${filterDate?`<button class="reset" onclick="filterDate=null;render()">全部</button>`:''}</div>`;
+  if(!data.length)h+=`<div class="empty">还没有记录<br>点击 + 开始</div>`;
+  h+=`<div class="entries">`;
+  data.forEach(e=>{
+    if(sec.id==='read'){
+      h+=`<div class="entry"><div class="entry-meta"><div class="entry-date">${fmtCN(e.date)}</div>
+        <div>${e.rating?`<span class="stars-display">${starsH(e.rating)}</span>`:''} ${e.minutes?`<span style="font-size:12px;color:var(--light)">${e.minutes}分钟</span>`:''} ${e.level?`<span style="font-size:11px;color:var(--light)">Lv.${esc(e.level)}</span>`:''}</div></div>
+        ${e.book?`<div style="font-size:13px;color:var(--muted);margin-top:4px">📘 ${esc(e.book)}</div>`:''}
+        <div class="entry-who">${(e.who||[]).map(id=>avSm(gFM(id),24)).join('')}
+          ${(e.listener||[]).length?`<span style="font-size:11px;color:var(--light);margin:0 4px">读给</span>${e.listener.map(id=>avSm(gFM(id),24)).join('')}`:''}</div>
+        ${e.comment?`<div style="font-size:13px;color:#777;margin-top:6px;line-height:1.7">${esc(e.comment)}</div>`:''}
+        <div style="text-align:right"><button class="entry-del" onclick="delE('${sec.key}','${e.id}')">删除</button></div></div>`;
+    }else if(sec.id==='share'){
+      const f=gFM(e.who);
+      h+=`<div class="entry sticky" style="background:${f.c}12;border-left:3px solid ${f.c}">
+        <div class="entry-meta"><div class="entry-date">${fmtCN(e.date)}</div>${avSm(f,22)}</div>
+        <div class="entry-text" style="margin-top:8px">${esc(e.text)}</div>
+        <div style="text-align:right"><button class="entry-del" onclick="delE('${sec.key}','${e.id}')">删除</button></div></div>`;
+    }else if(sec.id==='wish'){
+      const f=gFM(e.who);
+      h+=`<div class="entry ${e.done?'wish-done':''}">
+        <div class="entry-meta"><div style="display:flex;align-items:center;gap:8px">${avSm(f,26)}<span class="entry-date">${fmtCN(e.date)}</span></div></div>
+        <div class="entry-text">${esc(e.text)}</div>
+        ${!e.done?`<div style="margin-top:10px"><button onclick="togWish('${e.id}')" style="display:inline-flex;align-items:center;gap:4px;padding:8px 18px;border-radius:20px;background:#F8F4EF;border:1px dashed var(--border);font-size:13px;color:var(--muted);font-family:var(--ft);letter-spacing:2px;cursor:pointer">✨ 成真</button></div>`:''}
+        ${e.done?`<div class="chengtrue"><div style="display:flex;align-items:center;justify-content:space-between"><div class="chengtrue-label">✨ 成真</div><button onclick="togWish('${e.id}')" style="font-size:11px;color:var(--faint);cursor:pointer">撤回</button></div>
+          ${e.doneDate?`<div style="font-size:11px;color:var(--light);margin-bottom:6px">实现于 ${fmtCN(e.doneDate)}</div>`:''}
+          <div class="photos">${(e.photos||[]).map(p=>`<img src="${p}">`).join('')}
+            ${(e.photos||[]).length<5?`<div class="photo-add" onclick="addWishPhoto('${e.id}')">+</div>`:''}</div></div>`:''}
+        <div style="text-align:right"><button class="entry-del" onclick="delE('${sec.key}','${e.id}')">删除</button></div></div>`;
+    }else{
+      h+=`<div class="entry"><div class="entry-meta"><div class="entry-date">${fmtCN(e.date)}</div></div>
+        ${e.where?`<div style="font-size:13px;color:var(--muted);margin-top:2px">📍 ${esc(e.where)}</div>`:''}
+        <div class="entry-text">${esc(e.text||'')}</div>
+        <div class="entry-who">${(e.who||[]).map(id=>avSm(gFM(id),24)).join('')}</div>
+        ${e.note?`<div style="font-size:12px;color:var(--light);margin-top:4px">${esc(e.note)}</div>`:''}
+        ${(e.photos||[]).length?`<div class="photos">${e.photos.map(p=>`<img src="${p}">`).join('')}</div>`:''}
+        <div style="text-align:right"><button class="entry-del" onclick="delE('${sec.key}','${e.id}')">删除</button></div></div>`;}
+  });
+  h+=`</div>`;h+=VALUES;h+=`<button class="fab" onclick="openAdd('${sec.id}')">+</button>`;
+  el.innerHTML=h;if(modal)rModal();}
+
+/* ══ REPORT ══ */
+function rReport(el){
+  const now=new Date(),y=now.getFullYear(),m=now.getMonth()+1;
+  const dates=rptType==='week'?weekDates(today()):monDates(y,m);
+  const title=rptType==='week'?'周报':`${fmtMon(y,m)}月报`;
+  let h=`<div class="page-title">📊 日积月累</div><div class="page-desc">导出记录Hi Ai</div>`;
+  h+=`<div class="rpt-nav"><button class="${rptType==='week'?'active':''}" onclick="rptType='week';render()">周报</button>
+    <button class="${rptType==='month'?'active':''}" onclick="rptType='month';render()">月报</button></div>`;
+  h+=`<pre class="rpt-pre">${esc(genReport(dates,title))}</pre>`;
+  h+=`<button class="rpt-copy" id="cp-btn" onclick="copyRpt()">Hi Ai</button>`;h+=VALUES;el.innerHTML=h;}
+function copyRpt(){const now=new Date(),y=now.getFullYear(),m=now.getMonth()+1;
+  const dates=rptType==='week'?weekDates(today()):monDates(y,m);
+  const r=genReport(dates,rptType==='week'?'周报':`${fmtMon(y,m)}月报`);
+  navigator.clipboard.writeText(r).then(()=>{const b=$('#cp-btn');b.textContent='✓ 已复制';b.classList.add('ok');
+    setTimeout(()=>{b.textContent='Hi Ai';b.classList.remove('ok');},2000);}).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=r;ta.style.cssText='position:fixed;left:-9999px';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    const b=$('#cp-btn');b.textContent='✓ 已复制';b.classList.add('ok');setTimeout(()=>{b.textContent='Hi Ai';b.classList.remove('ok');},2000);});}
+
+/* ══ WISH PHOTOS ══ */
+async function addWishPhoto(id){
+  const data=load('xz_wish');const w=data.find(e=>e.id===id);if(!w)return;
+  if(!w.photos)w.photos=[];
+  const input=document.createElement('input');input.type='file';input.accept='image/*';input.multiple=true;
+  input.onchange=async e=>{const files=[...e.target.files].slice(0,5-w.photos.length);
+    for(const f of files){w.photos.push(await resizeImg(f));}save('xz_wish',data);render();};input.click();}
+
+/* ══ ADD MODAL ══ */
+function openAdd(secId){formData={date:filterDate||today(),who:[],listener:[],text:'',book:'',where:'',note:'',comment:'',minutes:'',level:'',rating:0,photos:[]};modal=secId;rModal();}
+
+function rModal(){
+  document.querySelectorAll('.modal-bg').forEach(e=>e.remove());if(!modal)return;
+  const sec=gSec(modal);const div=document.createElement('div');div.className='modal-bg';
+  div.onclick=e=>{if(e.target===div){modal=null;div.remove();}};
+  let h=`<div class="modal"><div class="modal-title">${sec.ico} 新记录</div>`;
+  h+=`<div class="field"><label>日期</label><input type="date" value="${formData.date}" onchange="formData.date=this.value" max="${today()}"></div>`;
+
+  if(modal==='share'||modal==='wish'){
+    h+=`<div class="field"><label>谁</label><div class="av-picker">`;
+    FM.forEach(f=>{h+=`<div class="av-pick ${formData.who.includes(f.id)?'sel':''}" onclick="tP('who','${f.id}',1)">${avPick(f,32)}<span style="font-size:9px;color:var(--muted)">${f.nick}</span></div>`;});
+    h+=`</div></div>`;
+  }else if(modal==='read'){
+    h+=`<div class="field"><label>谁读</label><div class="av-picker">`;
+    FM.forEach(f=>{h+=`<div class="av-pick ${formData.who.includes(f.id)?'sel':''}" onclick="tP('who','${f.id}')">${avPick(f,32)}<span style="font-size:9px;color:var(--muted)">${f.nick}</span></div>`;});
+    h+=`</div></div><div class="field"><label>谁听</label><div class="av-picker">`;
+    FM.forEach(f=>{h+=`<div class="av-pick ${formData.listener.includes(f.id)?'sel':''}" onclick="tP('listener','${f.id}')">${avPick(f,32)}<span style="font-size:9px;color:var(--muted)">${f.nick}</span></div>`;});
+    h+=`</div></div>`;
+  }else{
+    h+=`<div class="field"><label>谁参与了</label><div class="av-picker">`;
+    FM.forEach(f=>{h+=`<div class="av-pick ${formData.who.includes(f.id)?'sel':''}" onclick="tP('who','${f.id}')">${avPick(f,32)}<span style="font-size:9px;color:var(--muted)">${f.nick}</span></div>`;});
+    h+=`</div></div>`;}
+
+  if(modal==='read'){
+    h+=`<div class="field"><label>书名</label><input type="text" placeholder="今天读了什么" value="${esc(formData.book)}" oninput="formData.book=this.value"></div>`;
+    h+=`<div style="display:flex;gap:10px"><div class="field" style="flex:1"><label>分钟</label><input type="text" inputmode="numeric" placeholder="30" value="${formData.minutes}" oninput="formData.minutes=this.value"></div>
+      <div class="field" style="flex:1"><label>级别</label><input type="text" placeholder="如 H" value="${esc(formData.level)}" oninput="formData.level=this.value"></div></div>`;
+    h+=`<div class="field"><label>整体阅读感受</label><div class="stars">`;
+    for(let i=1;i<=5;i++)h+=`<span class="star ${i<=formData.rating?'on':''}" onclick="formData.rating=${formData.rating===i?0:i};rModal()">★</span>`;
+    h+=`</div></div>`;
+    h+=`<div class="field"><label>关于今天的共读，我想说</label><textarea placeholder="我想说…" oninput="formData.comment=this.value" style="min-height:80px">${esc(formData.comment)}</textarea></div>`;
+  }else if(modal==='share'){
+    h+=`<div class="field"><label>分享内容</label><textarea placeholder="最近我想跟世界上的小朋友和大朋友分享的是…" style="min-height:90px" oninput="formData.text=this.value">${esc(formData.text)}</textarea></div>`;
+  }else if(modal==='wish'){
+    h+=`<div class="field"><label>愿望</label><textarea placeholder="我希望…" style="min-height:80px" oninput="formData.text=this.value">${esc(formData.text)}</textarea></div>`;
+  }else if(modal==='move'){
+    h+=`<div class="field"><label>去了哪里</label><input type="text" placeholder="公园、骑行路线…" value="${esc(formData.where)}" oninput="formData.where=this.value"></div>`;
+    h+=`<div class="field"><label>做了什么</label><textarea placeholder="一起骑车到了…" oninput="formData.text=this.value">${esc(formData.text)}</textarea></div>`;
+    h+=`<div class="field"><label>记录</label><textarea placeholder="有趣的细节…" oninput="formData.note=this.value">${esc(formData.note)}</textarea></div>`;
+    h+=photoField();
+  }else if(modal==='make'){
+    h+=`<div class="field"><label>做了什么</label><textarea placeholder="一起烘焙、做饭…" oninput="formData.text=this.value">${esc(formData.text)}</textarea></div>`;
+    h+=`<div class="field"><label>记录</label><textarea placeholder="过程中的小故事…" oninput="formData.note=this.value">${esc(formData.note)}</textarea></div>`;
+    h+=photoField();}
+  h+=`<div class="btn-row"><button class="btn btn-cancel" onclick="modal=null;document.querySelector('.modal-bg').remove()">取消</button>
+    <button class="btn btn-primary" onclick="saveE()">保存</button></div></div>`;
+  div.innerHTML=h;document.body.appendChild(div);}
+
+function photoField(){
+  let h=`<div class="field"><label>照片（最多5张）</label><div class="photos">`;
+  (formData.photos||[]).forEach((p,i)=>{h+=`<img src="${p}" style="cursor:pointer" onclick="formData.photos.splice(${i},1);rModal()">`;});
+  if((formData.photos||[]).length<5)h+=`<div class="photo-add" onclick="pickPhotosFor(formData.photos)">+</div>`;
+  h+=`</div></div>`;return h;}
+
+function tP(field,id,single){if(single)formData[field]=[id];else{const i=formData[field].indexOf(id);if(i>=0)formData[field].splice(i,1);else formData[field].push(id);}rModal();}
+
+function saveE(){const sec=gSec(modal);if(!sec)return;const data=load(sec.key);const e={id:uid(),date:formData.date};
+  if(modal==='read'){e.who=formData.who;e.listener=formData.listener;e.book=formData.book;e.minutes=formData.minutes;e.level=formData.level;e.rating=formData.rating;e.comment=formData.comment;}
+  else if(modal==='share'){if(!formData.text.trim())return;e.who=formData.who[0]||'mama';e.text=formData.text;}
+  else if(modal==='wish'){if(!formData.text.trim())return;e.who=formData.who[0]||'mama';e.text=formData.text;e.done=false;e.photos=[];}
+  else{e.who=formData.who;e.where=formData.where||'';e.text=formData.text;e.note=formData.note;e.photos=formData.photos||[];}
+  data.push(e);save(sec.key,data);modal=null;document.querySelectorAll('.modal-bg').forEach(x=>x.remove());render();}
+
+function delE(k,id){if(!confirm('删除这条记录？'))return;save(k,load(k).filter(e=>e.id!==id));render();}
+function togWish(id){const d=load('xz_wish');const w=d.find(e=>e.id===id);if(w){w.done=!w.done;w.doneDate=w.done?today():null;if(!w.done)w.photos=[];}save('xz_wish',d);render();}
+
+/* ══ DATA ══ */
+function exportAll(){const d={version:3,exported:new Date().toISOString()};SECS.forEach(s=>{d[s.key]=load(s.key);});
+  const b=new Blob([JSON.stringify(d)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=`yunpingshi_${today()}.json`;a.click();URL.revokeObjectURL(a.href);}
+function importAll(file){const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);
+  SECS.forEach(s=>{if(d[s.key])save(s.key,d[s.key]);});render();alert('导入成功！');}catch(err){alert('导入失败');}};r.readAsText(file);}
+function clearAll(){if(confirm('确定清除所有数据？建议先导出备份。')){SECS.forEach(s=>localStorage.removeItem(s.key));render();}}
+
+render();
+$('#imp-f').addEventListener('change',e=>{if(e.target.files[0])importAll(e.target.files[0]);e.target.value='';});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
