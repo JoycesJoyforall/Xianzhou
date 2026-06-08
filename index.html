@@ -35,7 +35,8 @@ input[type=text]{width:100%;border:1px solid var(--faint);border-radius:10px;pad
 .tabs button.active{color:var(--text);}
 .tabs button .ico{font-size:18px;line-height:1;}
 .tabs button:active{transform:scale(0.92);}
-.hdr{text-align:center;padding:calc(env(safe-area-inset-top,12px) + 24px) 0 16px;}
+.hdr{text-align:center;padding:calc(env(safe-area-inset-top,12px) + 24px) 0 16px;position:relative;}
+.sync-badge{position:absolute;top:calc(env(safe-area-inset-top,12px) + 8px);right:18px;font-size:14px;cursor:pointer;padding:4px 8px;border-radius:8px;background:rgba(255,255,255,0.8);}
 .hdr-title{font-size:26px;letter-spacing:8px;font-family:var(--ft);color:var(--text);}
 .hdr-sub{font-size:11px;color:var(--light);letter-spacing:3px;margin-top:2px;}
 .avatars{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:8px 0 20px;}
@@ -197,6 +198,60 @@ input[type=text]{width:100%;border:1px solid var(--faint);border-radius:10px;pad
 <input type="file" id="imp-f" accept=".json" style="display:none">
 
 <script>
+/* ══ API CONFIG ══ */
+const API_BASE='http://101.33.214.33:3000';
+let syncStatus='idle';// idle|syncing|error
+let lastSync=null;
+
+async function apiFetch(path,opts={}){
+  try{
+    const res=await fetch(API_BASE+path,{...opts,headers:{'Content-Type':'application/json',...opts.headers}});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    return await res.json();
+  }catch(e){console.error('API error:',e);throw e;}
+}
+
+/* ══ SYNC FUNCTIONS ══ */
+async function syncFromCloud(){
+  syncStatus='syncing';renderSyncBadge();
+  try{
+    const [entries,todos,events]=await Promise.all([
+      apiFetch('/api/entries').catch(()=>[]),
+      apiFetch('/api/todos').catch(()=>[]),
+      apiFetch('/api/events').catch(()=>[])
+    ]);
+    // Map cloud data to local format
+    const mapEntry=e=>({id:e.id,type:e.type,content:e.content,mood:e.mood,date:e.date,author:e.author});
+    localStorage.setItem('xz_share',JSON.stringify(entries.filter(e=>e.type==='share').map(mapEntry)));
+    localStorage.setItem('xz_wish',JSON.stringify(entries.filter(e=>e.type==='wish').map(mapEntry)));
+    localStorage.setItem('xz_move',JSON.stringify(entries.filter(e=>e.type==='move').map(mapEntry)));
+    localStorage.setItem('xz_make',JSON.stringify(entries.filter(e=>e.type==='make').map(mapEntry)));
+    localStorage.setItem('xz_emotion',JSON.stringify(entries.filter(e=>e.type==='emotion').map(mapEntry)));
+    lastSync=new Date().toISOString();
+    syncStatus='idle';
+  }catch(e){syncStatus='error';console.error('Sync failed:',e);}
+  renderSyncBadge();
+}
+
+async function syncToCloud(key,data){
+  const typeMap={'xz_share':'share','xz_wish':'wish','xz_move':'move','xz_make':'make','xz_emotion':'emotion','xz_read':'read'};
+  const type=typeMap[key];if(!type)return;
+  try{
+    for(const item of data){
+      const payload={type:type,content:item.text||item.comment||item.content||'',mood:item.zone||item.rating||'',date:item.date,author:item.who||'mama'};
+      await apiFetch('/api/entries',{method:'POST',body:JSON.stringify(payload)});
+    }
+  }catch(e){console.error('Sync to cloud failed:',e);}
+}
+
+function renderSyncBadge(){
+  const badge=document.getElementById('sync-badge');
+  if(!badge)return;
+  if(syncStatus==='syncing'){badge.textContent='🔄';badge.title='同步中...';}
+  else if(syncStatus==='error'){badge.textContent='⚠️';badge.title='同步失败';}
+  else{badge.textContent='✓';badge.title=lastSync?'上次同步:'+new Date(lastSync).toLocaleString():'已连接';}
+}
+
 /* ══ FAMILY ══ */
 const FM=[
   {id:'mama',name:'咸蛋妈妈',nick:'妈妈',c:'#E8927C',ch:'咸',badge:'🥚'},
@@ -274,7 +329,7 @@ const SECS=[
 ];
 const gSec=id=>SECS.find(s=>s.id===id);
 const load=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return[];}};
-const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const save=(k,v)=>{localStorage.setItem(k,JSON.stringify(v));syncToCloud(k,v);};
 const fmtD=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const today=()=>fmtD(new Date());
 const parseD=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);};
@@ -349,7 +404,7 @@ function render(){$$('.tabs button').forEach(b=>b.classList.toggle('active',b.da
   const sec=gSec(view);if(sec)rSec(app,sec);}
 
 function rHome(el){
-  let h=`<div class="hdr"><div class="hdr-title">咸粥楸芊·云平时</div><div class="hdr-sub">六一快乐 · 2026</div></div>`;
+  let h=`<div class="hdr"><div class="hdr-title">咸粥楸芊·云平时</div><div class="hdr-sub">六一快乐 · 2026</div><div class="sync-badge" id="sync-badge" onclick="syncFromCloud()">✓</div></div>`;
   /* 今日家庭天气 — tap a face to open their portrait */
   h+=`<div class="sec-label-row">今日家庭天气</div>`;
   h+=`<div class="weather">${FM.map(f=>{const z=todayZone(f.id);const col=z?gZ(z).c:'var(--faint)';
@@ -372,7 +427,7 @@ function rHome(el){
     h+=`<div class="sec-card" onclick="go('${s.id}')"><div class="sec-ico">${s.ico}</div><div><div class="sec-label">${s.label}</div><div class="sec-desc">${s.desc}</div></div><div class="sec-count">${ct?ct+'条':''}</div></div>`;});
   h+=`<div class="sec-card" onclick="go('report')"><div class="sec-ico">📊</div><div><div class="sec-label">日积月累</div><div class="sec-desc">导出记录 · 数据管理</div></div></div>`;
   h+=`</div>`;h+=VALUES;
-  el.innerHTML=h;}
+  el.innerHTML=h;renderSyncBadge();}
 
 function rSec(el,sec){
   let data=load(sec.key);if(filterDate)data=data.filter(e=>e.date===filterDate);
@@ -644,6 +699,12 @@ function clearAll(){if(confirm('确定清除所有数据？建议先导出备份
 render();
 $('#imp-f').addEventListener('change',e=>{if(e.target.files[0])importAll(e.target.files[0]);e.target.value='';});
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+/* ══ AUTO SYNC ══ */
+// 首次加载同步
+syncFromCloud();
+// 每30秒自动同步
+setInterval(syncFromCloud,30000);
 </script>
 </body>
 </html>
