@@ -30,10 +30,10 @@ input[type=text]{width:100%;border:1px solid var(--faint);border-radius:10px;pad
 .tabs{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;background:rgba(253,248,240,0.95);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);
   padding:6px 0 calc(6px + var(--safe-b));z-index:100;}
-.tabs button{flex:1;max-width:90px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;
-  font-size:10px;color:var(--light);letter-spacing:1px;transition:color 0.2s;}
+.tabs button{flex:1;max-width:80px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;
+  font-size:9.5px;color:var(--light);letter-spacing:0.5px;transition:color 0.2s;}
 .tabs button.active{color:var(--text);}
-.tabs button .ico{font-size:20px;line-height:1;}
+.tabs button .ico{font-size:18px;line-height:1;}
 .tabs button:active{transform:scale(0.92);}
 .hdr{text-align:center;padding:calc(env(safe-area-inset-top,12px) + 24px) 0 16px;}
 .hdr-title{font-size:26px;letter-spacing:8px;font-family:var(--ft);color:var(--text);}
@@ -120,6 +120,67 @@ input[type=text]{width:100%;border:1px solid var(--faint);border-radius:10px;pad
 .data-btn{padding:10px 18px;border-radius:10px;font-size:12px;letter-spacing:1px;background:#F0EDE8;color:var(--text);}
 .data-btn:active{opacity:0.7;}
 .data-btn.del{background:none;color:var(--light);font-size:11px;}
+/* ══ HOME LAYOUT ══ */
+.sec-label-row{font-size:12px;color:var(--muted);letter-spacing:3px;font-family:var(--ft);padding:22px 2px 10px;}
+.weather{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding:2px 0 6px;}
+.w-av{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;}
+.w-ring{border-radius:50%;padding:3px;transition:transform .12s;}
+.w-av:active .w-ring{transform:scale(.9);}
+.w-name{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.w-zone{font-size:9px;color:var(--light);letter-spacing:1px;min-height:11px;}
+/* ══ EMOTION / ZONES ══ */
+.emo-hero{background:var(--card);border-radius:16px;padding:16px;border:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.04);cursor:pointer;transition:transform .12s;}
+.emo-hero:active{transform:scale(.98);}
+.emo-hero-top{display:flex;align-items:center;gap:14px;}
+.emo-hero-title{font-size:16px;font-family:var(--ft);letter-spacing:2px;}
+.emo-hero-desc{font-size:11px;color:var(--light);margin-top:2px;}
+.emo-monsters{display:flex;gap:8px;margin-top:14px;}
+.monster-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 4px;border-radius:16px;background:var(--bg);transition:transform .12s;cursor:pointer;}
+.monster-btn:active{transform:scale(.93);}
+.monster-name{font-size:13px;font-family:var(--ft);letter-spacing:1px;}
+.monster-sub{font-size:9px;color:var(--light);text-align:center;line-height:1.3;}
+.emo-q{text-align:center;font-size:16px;font-family:var(--ft);letter-spacing:2px;color:var(--text);padding:14px 0 10px;}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{padding:9px 15px;border-radius:20px;border:1px solid var(--faint);background:#fff;font-size:13px;color:var(--muted);transition:all .12s;cursor:pointer;}
+.chip.on{background:var(--text);color:#fff;border-color:var(--text);}
+.chip:active{transform:scale(.93);}
+.zone-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 11px;border-radius:14px;color:#fff;font-family:var(--ft);letter-spacing:1px;}
+.emo-entry{background:var(--card);border-radius:14px;padding:13px 16px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.03);border-left-width:4px;}
+.bigwave{animation:wob 2.6s ease-in-out infinite;transform-origin:center 80%;}
+@keyframes wob{0%,100%{transform:rotate(-3.5deg)}50%{transform:rotate(3.5deg)}}
+.zone-grid{display:flex;gap:8px;}
+.zone-pick{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 2px;border-radius:14px;background:#fff;border:2px solid transparent;transition:all .12s;cursor:pointer;}
+.zone-pick.sel{border-color:var(--text);}
+.zone-pick:active{transform:scale(.93);}
+.zone-pick span{font-size:11px;font-family:var(--ft);}
+/* ══ PROFILE ══ */
+.back-btn{font-size:13px;color:var(--muted);padding:16px 2px 4px;letter-spacing:1px;cursor:pointer;}
+.back-btn:active{opacity:.6;}
+.pf-hero{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0 16px;}
+.pf-name{font-size:22px;font-family:var(--ft);letter-spacing:4px;}
+.pf-sub{font-size:11px;color:var(--light);letter-spacing:2px;}
+.pf-card{background:var(--card);border-radius:16px;padding:16px 18px;border:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.04);margin-bottom:12px;}
+.pf-card h4{font-size:13px;font-family:var(--ft);letter-spacing:2px;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+.pf-card h4 .hint{font-size:10px;color:var(--light);letter-spacing:1px;font-family:var(--fb);margin-left:auto;}
+.pf-row{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+.pf-row:last-child{margin-bottom:0;}
+.pf-row label{font-size:12px;color:var(--muted);width:60px;flex-shrink:0;letter-spacing:1px;}
+.pf-row input{flex:1;}
+.pf-field{margin-bottom:12px;}
+.pf-field:last-child{margin-bottom:0;}
+.pf-field label{font-size:12px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;}
+.pf-field textarea{width:100%;min-height:50px;border:1px solid var(--faint);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--text);resize:vertical;outline:none;background:#fff;line-height:1.7;}
+.pf-zodiac{font-size:13px;color:var(--muted);padding:2px 0 0;letter-spacing:1px;}
+.tool-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+.tool-row:last-child{margin-bottom:0;}
+.tool-mon{flex-shrink:0;margin-top:3px;}
+.tool-row textarea{flex:1;min-height:42px;border:1px solid var(--faint);border-radius:10px;padding:8px 11px;font-size:13px;color:var(--text);resize:vertical;outline:none;background:#fff;line-height:1.6;}
+.zbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:10px 0 4px;background:var(--faint);}
+.zlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:8px;}
+.zlegend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.pattern{font-size:12.5px;color:var(--muted);line-height:1.9;background:#F8F6F1;padding:11px 13px;border-radius:10px;margin-top:10px;}
+.manual-btn{display:block;width:100%;margin-top:8px;padding:13px;border-radius:12px;background:#F0EDE8;color:var(--text);font-size:13px;font-family:var(--ft);letter-spacing:3px;cursor:pointer;}
+.manual-btn:active{opacity:.75;}
 </style>
 </head>
 <body>
@@ -131,6 +192,7 @@ input[type=text]{width:100%;border:1px solid var(--faint);border-radius:10px;pad
   <button data-t="move" onclick="go('move')"><span class="ico">🚲</span>动动</button>
   <button data-t="make" onclick="go('make')"><span class="ico">🍞</span>劳作</button>
   <button data-t="wish" onclick="go('wish')"><span class="ico">🌊</span>愿望</button>
+  <button data-t="emotion" onclick="go('emotion')"><span class="ico">👾</span>小怪兽</button>
 </nav>
 <input type="file" id="imp-f" accept=".json" style="display:none">
 
@@ -159,6 +221,48 @@ const avBig=f=>`<div>${circleSvg(f.c,f.ch,48,f.badge)}</div><div class="av-name"
 const avSm=(f,sz=28)=>circleSvg(f.c,f.ch,sz);
 const avPick=(f,sz=34)=>circleSvg(f.c,f.ch,sz);
 
+/* ══ ZONES (Zones of Regulation) ══ */
+const ZONES=[
+  {id:'green', cn:'绿', c:'#7BAE7F', name:'刚刚好', sub:'平静·开心\n专注·刚刚好'},
+  {id:'blue',  cn:'蓝', c:'#6F9FBE', name:'慢吞吞', sub:'难过·累\n没力气·无聊'},
+  {id:'yellow',cn:'黄', c:'#E0B23E', name:'毛毛躁', sub:'着急·紧张\n兴奋·烦躁'},
+  {id:'red',   cn:'红', c:'#D9645A', name:'炸开了', sub:'暴怒·失控\n崩溃·太满了'},
+];
+const gZ=id=>ZONES.find(z=>z.id===id)||ZONES[0];
+
+/* friendly monster face per zone */
+function monsterSvg(zid,size){
+  const z=gZ(zid),s=size,c=z.c,ex=s*0.30,ey=s*0.44,er=s*0.085;
+  let mouth='',extra='';
+  if(zid==='green')mouth=`<path d="M${s*0.36} ${s*0.64} Q${s*0.5} ${s*0.76} ${s*0.64} ${s*0.64}" stroke="#fff" stroke-width="${s*0.05}" fill="none" stroke-linecap="round"/>`;
+  if(zid==='blue'){mouth=`<path d="M${s*0.38} ${s*0.70} Q${s*0.5} ${s*0.62} ${s*0.62} ${s*0.70}" stroke="#fff" stroke-width="${s*0.045}" fill="none" stroke-linecap="round"/>`;extra=`<path d="M${s*0.7} ${s*0.5} q${s*0.04} ${s*0.1} 0 ${s*0.14} q-${s*0.04}-${s*0.04} 0-${s*0.14}" fill="#fff" opacity="0.85"/>`;}
+  if(zid==='yellow')mouth=`<path d="M${s*0.36} ${s*0.68} q${s*0.07}-${s*0.06} ${s*0.14} 0 q${s*0.07} ${s*0.06} ${s*0.14} 0" stroke="#fff" stroke-width="${s*0.045}" fill="none" stroke-linecap="round"/>`;
+  if(zid==='red'){mouth=`<ellipse cx="${s*0.5}" cy="${s*0.70}" rx="${s*0.11}" ry="${s*0.09}" fill="#fff"/>`;extra=`<path d="M${s*0.24} ${s*0.34} L${s*0.40} ${s*0.40}" stroke="#fff" stroke-width="${s*0.05}" stroke-linecap="round"/><path d="M${s*0.76} ${s*0.34} L${s*0.60} ${s*0.40}" stroke="#fff" stroke-width="${s*0.05}" stroke-linecap="round"/>`;}
+  return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="display:block;overflow:visible">
+    <path d="M${s*0.5} ${s*0.05} C${s*0.85} ${s*0.05} ${s*0.95} ${s*0.4} ${s*0.92} ${s*0.62} C${s*0.88} ${s*0.92} ${s*0.7} ${s*0.97} ${s*0.5} ${s*0.97} C${s*0.3} ${s*0.97} ${s*0.12} ${s*0.92} ${s*0.08} ${s*0.62} C${s*0.05} ${s*0.4} ${s*0.15} ${s*0.05} ${s*0.5} ${s*0.05} Z" fill="${c}" style="filter:drop-shadow(0 3px 6px ${c}55)"/>
+    <circle cx="${ex}" cy="${ey}" r="${er}" fill="#fff"/><circle cx="${s-ex}" cy="${ey}" r="${er}" fill="#fff"/>
+    <circle cx="${ex}" cy="${ey}" r="${er*0.5}" fill="${z.c}" opacity="0.85" style="filter:brightness(0.55)"/><circle cx="${s-ex}" cy="${ey}" r="${er*0.5}" fill="${z.c}" opacity="0.85" style="filter:brightness(0.55)"/>
+    ${mouth}${extra}</svg>`;
+}
+
+/* ══ ZODIAC (auto sun sign from birthday) ══ */
+function zodiac(bd){if(!bd)return'';const p=bd.split('-');if(p.length<3)return'';const m=+p[1],d=+p[2];if(!m||!d)return'';
+  const cut=[19,18,20,19,20,20,22,22,22,22,21,21];
+  const le=['♑摩羯','♒水瓶','♓双鱼','♈白羊','♉金牛','♊双子','♋巨蟹','♌狮子','♍处女','♎天秤','♏天蝎','♐射手'];
+  const gt=['♒水瓶','♓双鱼','♈白羊','♉金牛','♊双子','♋巨蟹','♌狮子','♍处女','♎天秤','♏天蝎','♐射手','♑摩羯'];
+  return (d<=cut[m-1]?le[m-1]:gt[m-1])+'座';}
+
+/* ══ PROFILE storage ══ */
+const loadP=()=>{try{return JSON.parse(localStorage.getItem('xz_profile')||'{}');}catch(e){return{};}};
+const saveP=o=>localStorage.setItem('xz_profile',JSON.stringify(o));
+function getP(id){const p=loadP();return p[id]||{birthday:'',mayan:'',hd:'',inspiration:'',love:'',fear:'',tools:{}};}
+function setPF(id,field,val){const p=loadP();p[id]=p[id]||{tools:{}};p[id][field]=val;saveP(p);}
+function setTool(id,zone,val){const p=loadP();p[id]=p[id]||{tools:{}};p[id].tools=p[id].tools||{};p[id].tools[zone]=val;saveP(p);}
+
+/* today's latest zone for a person */
+function todayZone(id){const all=load('xz_emotion').filter(e=>e.who===id&&e.date===today());
+  if(!all.length)return null;return all[all.length-1].zone;}
+
 /* ══ SECTIONS ══ */
 const SECS=[
   {id:'read',ico:'📖',label:'芊楸共读',desc:'记录阅读',key:'xz_read'},
@@ -166,6 +270,7 @@ const SECS=[
   {id:'move',ico:'🚲',label:'一起动动',desc:'记录家庭玩耍地图',key:'xz_move'},
   {id:'make',ico:'🍞',label:'一起劳作',desc:'记录家庭身体力行',key:'xz_make'},
   {id:'wish',ico:'🌊',label:'愿望池塘',desc:'记录每个人的愿望',key:'xz_wish'},
+  {id:'emotion',ico:'👾',label:'情绪小怪兽',desc:'记录情绪天气',key:'xz_emotion'},
 ];
 const gSec=id=>SECS.find(s=>s.id===id);
 const load=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return[];}};
@@ -183,8 +288,8 @@ const $=s=>document.querySelector(s);const $$=s=>document.querySelectorAll(s);
 const starsH=n=>'★'.repeat(n)+'☆'.repeat(5-n);
 const VALUES=`<div class="values"><span>Love · Hope · Respect</span></div>`;
 
-let view='home',modal=null,formData={},filterDate=null,rptType='week';
-function go(v){view=v;modal=null;filterDate=null;render();window.scrollTo(0,0);}
+let view='home',modal=null,formData={},filterDate=null,rptType='week',profileId=null;
+function go(v,arg){view=v;if(v==='profile')profileId=arg;modal=null;filterDate=null;render();window.scrollTo(0,0);}
 
 /* ══ PHOTOS ══ */
 function resizeImg(file,maxW=400){
@@ -214,25 +319,59 @@ function genReport(dates,title){
         if(e.comment)r+=`  想说：${e.comment}\n`;
       }else if(sec.id==='share'){r+=`${gFM(e.who).nick}：${e.text}\n`;
       }else if(sec.id==='wish'){r+=`${gFM(e.who).nick}许愿：${e.text}${e.done?' ✅':' ✨'}\n`;
+      }else if(sec.id==='emotion'){const z=gZ(e.zone);r+=`${gFM(e.who).nick} ${z.name}（${z.cn}区）`;if(e.time)r+=`·${e.time}`;if(e.place)r+=`·📍${e.place}`;r+=`\n`;if(e.text)r+=`  发生：${e.text}\n`;if(e.helped)r+=`  帮到我：${e.helped}\n`;
       }else{const who=(e.who||[]).map(id=>gFM(id).nick).join('、');r+=`${who}`;if(e.where)r+=` 📍${e.where}`;r+=`\n  ${e.text||''}`;if(e.note)r+=`\n  记录：${e.note}`;r+=`\n`;}});r+=`\n`;});
+  let pr='';
+  FM.forEach(f=>{const p=getP(f.id);const ent=load('xz_emotion').filter(e=>e.who===f.id&&dates.includes(e.date));
+    const cnt={green:0,blue:0,yellow:0,red:0};ent.forEach(e=>{if(cnt[e.zone]!=null)cnt[e.zone]++;});
+    const hasP=p.birthday||p.mayan||p.hd||p.love||p.fear||p.inspiration||(p.tools&&Object.values(p.tools).some(Boolean));
+    if(!hasP&&!ent.length)return;
+    pr+=`### ${f.nick}（${f.name}）\n`;
+    if(p.birthday)pr+=`星座：${zodiac(p.birthday)}　生日：${p.birthday}\n`;
+    if(p.mayan)pr+=`玛雅：${p.mayan}\n`;
+    if(p.hd)pr+=`人类图：${p.hd}\n`;
+    if(p.inspiration)pr+=`灵感：${p.inspiration}\n`;
+    if(p.love)pr+=`爱：${p.love}\n`;
+    if(p.fear)pr+=`怕：${p.fear}\n`;
+    if(p.tools)ZONES.forEach(z=>{if(p.tools[z.id])pr+=`${z.cn}区工具：${p.tools[z.id]}\n`;});
+    if(ent.length)pr+=`本期小怪兽：🟢${cnt.green} 🔵${cnt.blue} 🟡${cnt.yellow} 🔴${cnt.red}\n`;
+    pr+=`\n`;});
+  if(pr)r+=`## 🧭 家庭画像\n${pr}`;
   r+=`---\nLove · Hope · Respect\n`;return r;}
 
 /* ══ RENDER ══ */
 function render(){$$('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.t===view));
-  const app=$('#app');if(view==='home')return rHome(app);if(view==='report')return rReport(app);const sec=gSec(view);if(sec)rSec(app,sec);}
+  const app=$('#app');
+  if(view==='home')return rHome(app);
+  if(view==='report')return rReport(app);
+  if(view==='emotion')return rEmotion(app);
+  if(view==='profile')return rProfile(app,profileId);
+  const sec=gSec(view);if(sec)rSec(app,sec);}
 
 function rHome(el){
   let h=`<div class="hdr"><div class="hdr-title">咸粥楸芊·云平时</div><div class="hdr-sub">六一快乐 · 2026</div></div>`;
-  h+=`<div class="avatars">${FM.map(f=>`<div class="avatar">${avBig(f)}</div>`).join('')}</div>`;
+  /* 今日家庭天气 — tap a face to open their portrait */
+  h+=`<div class="sec-label-row">今日家庭天气</div>`;
+  h+=`<div class="weather">${FM.map(f=>{const z=todayZone(f.id);const col=z?gZ(z).c:'var(--faint)';
+    return `<div class="w-av" onclick="go('profile','${f.id}')">
+      <div class="w-ring" style="box-shadow:0 0 0 3px ${col}">${circleSvg(f.c,f.ch,44,f.badge)}</div>
+      <div class="w-name">${f.nick}</div><div class="w-zone">${z?gZ(z).name:'·'}</div></div>`;}).join('')}</div>`;
+  /* 情绪小怪兽 hero */
+  const ec=load('xz_emotion').length;
+  h+=`<div class="sec-label-row">情绪小怪兽</div>`;
+  h+=`<div class="emo-hero" onclick="go('emotion')">
+    <div class="emo-hero-top"><div class="bigwave">${monsterSvg('green',42)}</div>
+      <div style="flex:1"><div class="emo-hero-title">谁的小怪兽出来了？</div>
+        <div class="emo-hero-desc">点一只小怪兽，记下此刻${ec?` · 已记 ${ec} 次`:''}</div></div></div>
+    <div class="emo-monsters">${ZONES.map(z=>`<div class="monster-btn" onclick="event.stopPropagation();openAddEmotion('${z.id}')">
+      ${monsterSvg(z.id,46)}<div class="monster-name" style="color:${z.c}">${z.name}</div></div>`).join('')}</div></div>`;
+  /* 一起记录 */
+  h+=`<div class="sec-label-row">一起记录</div>`;
   h+=`<div class="sec-cards">`;
-  SECS.forEach(s=>{const ct=load(s.key).length;
+  SECS.filter(s=>s.id!=='emotion').forEach(s=>{const ct=load(s.key).length;
     h+=`<div class="sec-card" onclick="go('${s.id}')"><div class="sec-ico">${s.ico}</div><div><div class="sec-label">${s.label}</div><div class="sec-desc">${s.desc}</div></div><div class="sec-count">${ct?ct+'条':''}</div></div>`;});
-  h+=`<div class="sec-card" onclick="go('report')"><div class="sec-ico">📊</div><div><div class="sec-label">日积月累</div><div class="sec-desc">导出记录Hi Ai</div></div></div>`;
+  h+=`<div class="sec-card" onclick="go('report')"><div class="sec-ico">📊</div><div><div class="sec-label">日积月累</div><div class="sec-desc">导出记录 · 数据管理</div></div></div>`;
   h+=`</div>`;h+=VALUES;
-  h+=`<div class="data-sec"><div class="dt-title">数据管理</div><div class="data-btns">
-    <button class="data-btn" onclick="exportAll()">导出数据</button>
-    <button class="data-btn" onclick="$('#imp-f').click()">导入数据</button>
-    <button class="data-btn del" onclick="clearAll()">清除</button></div></div>`;
   el.innerHTML=h;}
 
 function rSec(el,sec){
@@ -285,6 +424,113 @@ function rSec(el,sec){
   h+=`</div>`;h+=VALUES;h+=`<button class="fab" onclick="openAdd('${sec.id}')">+</button>`;
   el.innerHTML=h;if(modal)rModal();}
 
+/* ══ EMOTION PAGE ══ */
+function rEmotion(el){
+  let data=load('xz_emotion');if(filterDate)data=data.filter(e=>e.date===filterDate);
+  data.sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));
+  const fd=filterDate||today(),canFwd=!filterDate||shiftD(fd,1)<=today();
+  let h=`<div class="page-title">👾 情绪小怪兽</div><div class="page-desc">点一只小怪兽，记下此刻</div>`;
+  h+=`<div class="emo-hero" style="cursor:default"><div class="emo-monsters">${ZONES.map(z=>`<div class="monster-btn" onclick="openAddEmotion('${z.id}')">${monsterSvg(z.id,52)}<div class="monster-name" style="color:${z.c}">${z.name}</div><div class="monster-sub">${z.sub.replace(/\n/g,'<br>')}</div></div>`).join('')}</div></div>`;
+  h+=`<div class="date-filter"><button class="arrow" onclick="filterDate='${shiftD(fd,-1)}';render()">‹</button>
+    <div class="dt" onclick="this.querySelector('input').showPicker?.()||this.querySelector('input').focus()">
+      ${filterDate?fmtCN(filterDate):'全部日期'}<input type="date" value="${filterDate||''}" max="${today()}" onchange="filterDate=this.value||null;render()"></div>
+    <button class="arrow" ${canFwd?`onclick="filterDate='${shiftD(fd,1)}';render()"`:''} style="${canFwd?'':'opacity:0.3'}">›</button>
+    ${filterDate?`<button class="reset" onclick="filterDate=null;render()">全部</button>`:''}</div>`;
+  if(!data.length)h+=`<div class="empty">还没有记录<br>点上面的小怪兽开始</div>`;
+  h+=`<div class="entries">`;
+  data.forEach(e=>{const z=gZ(e.zone),f=gFM(e.who);
+    h+=`<div class="emo-entry" style="border-left-color:${z.c}">
+      <div class="entry-meta"><div class="entry-date">${fmtCN(e.date)}${e.time?' · '+esc(e.time):''}</div>
+        <span class="zone-tag" style="background:${z.c}">${z.cn} ${z.name}</span></div>
+      <div class="entry-who" style="margin-top:8px">${avSm(f,24)}<span style="font-size:12px;color:var(--muted)">${f.nick}</span>${e.place?`<span style="font-size:12px;color:var(--light);margin-left:6px">📍${esc(e.place)}</span>`:''}</div>
+      ${e.text?`<div class="entry-text" style="font-size:13px;margin-top:6px">${esc(e.text)}</div>`:''}
+      ${e.helped?`<div style="font-size:12px;color:#6B9E6B;margin-top:6px">🧰 帮到我：${esc(e.helped)}</div>`:''}
+      <div style="text-align:right"><button class="entry-del" onclick="delE('xz_emotion','${e.id}')">删除</button></div></div>`;});
+  h+=`</div>`;h+=VALUES;
+  el.innerHTML=h;if(modal)rModal();}
+
+/* ══ PROFILE PAGE ══ */
+function rProfile(el,id){
+  const f=gFM(id),p=getP(id);
+  let h=`<div class="back-btn" onclick="go('home')">← 返回</div>`;
+  h+=`<div class="pf-hero">${circleSvg(f.c,f.ch,72,f.badge)}<div class="pf-name">${f.name}</div><div class="pf-sub">${f.nick}</div></div>`;
+  h+=`<div class="pf-card"><h4>🪐 基础信息</h4>
+    <div class="pf-row"><label>生日</label><input type="date" value="${p.birthday||''}" max="${today()}" onchange="setPF('${id}','birthday',this.value);render()"></div>
+    ${p.birthday?`<div class="pf-zodiac">☀️ ${zodiac(p.birthday)}</div>`:''}
+    <div class="pf-field" style="margin-top:12px"><label>玛雅星盘</label><textarea placeholder="例：红龙 · KIN 1…" oninput="setPF('${id}','mayan',this.value)">${esc(p.mayan)}</textarea></div>
+    <div class="pf-field"><label>人类图 Human Design</label><textarea placeholder="例：生产者 · 情绪权威 · 6/2…" oninput="setPF('${id}','hd',this.value)">${esc(p.hd)}</textarea></div></div>`;
+  h+=`<div class="pf-card"><h4>✨ 个人灵感</h4><div class="pf-field"><textarea placeholder="此刻关于这个人，我想记下的一句话…" oninput="setPF('${id}','inspiration',this.value)">${esc(p.inspiration)}</textarea></div></div>`;
+  h+=`<div class="pf-card"><h4>💗 爱与怕<span class="hint">潜意识 · 慢慢看见</span></h4>
+    <div class="pf-field"><label>我爱…</label><textarea placeholder="让 ${f.nick} 发光、放松、回到绿区的…" oninput="setPF('${id}','love',this.value)">${esc(p.love)}</textarea></div>
+    <div class="pf-field"><label>我怕…</label><textarea placeholder="让 ${f.nick} 不安、退缩、变成红/黄怪兽的…" oninput="setPF('${id}','fear',this.value)">${esc(p.fear)}</textarea></div></div>`;
+  h+=`<div class="pf-card"><h4>🧰 情绪工具箱<span class="hint">这样帮我回到绿区</span></h4>`;
+  ZONES.forEach(z=>{const tv=(p.tools&&p.tools[z.id])||'';
+    h+=`<div class="tool-row"><div class="tool-mon">${monsterSvg(z.id,30)}</div><textarea placeholder="在${z.cn}区·${z.name}时，这样帮我…" oninput="setTool('${id}','${z.id}',this.value)">${esc(tv)}</textarea></div>`;});
+  h+=`</div>`;
+  const ent=load('xz_emotion').filter(e=>e.who===id);
+  const cnt={green:0,blue:0,yellow:0,red:0};ent.forEach(e=>{if(cnt[e.zone]!=null)cnt[e.zone]++;});
+  const tot=ent.length;
+  h+=`<div class="pf-card"><h4>👣 情绪足迹<span class="hint">${tot} 次记录</span></h4>`;
+  if(tot){
+    h+=`<div class="zbar">${ZONES.map(z=>cnt[z.id]?`<span style="flex:${cnt[z.id]};background:${z.c}"></span>`:'').join('')}</div>`;
+    h+=`<div class="zlegend">${ZONES.map(z=>`<span><i style="background:${z.c}"></i>${z.name} ${cnt[z.id]}</span>`).join('')}</div>`;
+    const ng=ent.filter(e=>e.zone!=='green');
+    const top=(arr,key)=>{const m={};arr.forEach(e=>{const v=(e[key]||'').trim();if(v)m[v]=(m[v]||0)+1;});let bk='',bn=0;for(const k in m)if(m[k]>bn){bn=m[k];bk=k;}return bk?`${bk}（${bn}次）`:'';};
+    const tp=top(ng,'time'),pl=top(ng,'place');
+    if(tp||pl)h+=`<div class="pattern">大情绪（红/黄/蓝）最常出现在：${[tp&&'🕐 '+tp,pl&&'📍 '+pl].filter(Boolean).join('　·　')}</div>`;
+  }else{h+=`<div class="pattern">还没有 ${f.nick} 的情绪记录。在「情绪小怪兽」里点一只，时间久了就能看见规律。</div>`;}
+  h+=`</div>`;
+  h+=`<button class="manual-btn" onclick="openManual('${id}')">📄 ${f.nick} 的使用说明书</button>`;
+  h+=VALUES;el.innerHTML=h;}
+
+/* ══ USER MANUAL ══ */
+let manualText='';
+function openManual(id){
+  const f=gFM(id),p=getP(id);
+  let txt=`《${f.nick}的使用说明书》\n`;
+  if(p.birthday)txt+=`生日 ${p.birthday}　☀️${zodiac(p.birthday)}\n`;
+  if(p.mayan)txt+=`玛雅 ${p.mayan}\n`;
+  if(p.hd)txt+=`人类图 ${p.hd}\n`;
+  if(p.inspiration)txt+=`\n灵感：${p.inspiration}\n`;
+  if(p.love)txt+=`\n我爱：${p.love}\n`;
+  if(p.fear)txt+=`我怕：${p.fear}\n`;
+  const tools=ZONES.map(z=>{const t=(p.tools&&p.tools[z.id])||'';return t?`${z.cn}区·${z.name}：${t}`:'';}).filter(Boolean).join('\n');
+  if(tools)txt+=`\n情绪工具箱：\n${tools}\n`;
+  manualText=txt;
+  document.querySelectorAll('.modal-bg').forEach(e=>e.remove());
+  const div=document.createElement('div');div.className='modal-bg';
+  div.onclick=e=>{if(e.target===div)div.remove();};
+  let bh=`<div class="modal"><div class="modal-title">📄 ${f.nick}的使用说明书</div>`;
+  bh+=`<div style="display:flex;justify-content:center;margin-bottom:14px">${circleSvg(f.c,f.ch,56,f.badge)}</div>`;
+  bh+=`<pre class="rpt-pre">${esc(txt)}</pre>`;
+  bh+=`<button class="rpt-copy" id="man-cp" onclick="copyManual(this)">复制 · 分享给老师/家人/Hi Ai</button>`;
+  bh+=`<button class="btn btn-cancel" style="margin-top:10px;width:100%" onclick="this.closest('.modal-bg').remove()">关闭</button></div>`;
+  div.innerHTML=bh;document.body.appendChild(div);}
+function copyManual(btn){const done=()=>{btn.textContent='✓ 已复制';btn.classList.add('ok');setTimeout(()=>{btn.textContent='复制 · 分享给老师/家人/Hi Ai';btn.classList.remove('ok');},2000);};
+  navigator.clipboard.writeText(manualText).then(done).catch(()=>{const ta=document.createElement('textarea');ta.value=manualText;ta.style.cssText='position:fixed;left:-9999px';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();});}
+
+/* ══ EMOTION ADD ══ */
+function openAddEmotion(zone){formData={date:(view==='emotion'&&filterDate)?filterDate:today(),who:[],zone:zone,time:'',place:'',text:'',helped:''};modal='emotion';rModal();}
+function buildEmotionModal(div){
+  let h=`<div class="modal"><div class="modal-title">记录小怪兽</div>`;
+  h+=`<div class="field"><label>哪只小怪兽出来了？</label><div class="zone-grid">`;
+  ZONES.forEach(zz=>{h+=`<div class="zone-pick ${formData.zone===zz.id?'sel':''}" onclick="formData.zone='${zz.id}';rModal()">${monsterSvg(zz.id,40)}<span style="color:${zz.c}">${zz.name}</span></div>`;});
+  h+=`</div></div>`;
+  h+=`<div class="field"><label>是谁？</label><div class="av-picker">`;
+  FM.forEach(f=>{h+=`<div class="av-pick ${formData.who.includes(f.id)?'sel':''}" onclick="tP('who','${f.id}',1)">${avPick(f,36)}<span style="font-size:9px;color:var(--muted)">${f.nick}</span></div>`;});
+  h+=`</div></div>`;
+  h+=`<div class="field"><label>日期</label><input type="date" value="${formData.date}" onchange="formData.date=this.value" max="${today()}"></div>`;
+  const times=['早上','上学前','在学校','放学','吃饭','洗澡','睡前','其他'];
+  h+=`<div class="field"><label>什么时候？（可选）</label><div class="chips">${times.map(t=>`<span class="chip ${formData.time===t?'on':''}" onclick="formData.time=formData.time==='${t}'?'':'${t}';rModal()">${t}</span>`).join('')}</div></div>`;
+  const places=['家里','学校','路上','外面','奶奶家','其他'];
+  h+=`<div class="field"><label>在哪里？（可选）</label><div class="chips">${places.map(pl=>`<span class="chip ${formData.place===pl?'on':''}" onclick="formData.place=formData.place==='${pl}'?'':'${pl}';rModal()">${pl}</span>`).join('')}</div></div>`;
+  h+=`<div class="field"><label>发生了什么？（可选）</label><textarea placeholder="刚刚……" oninput="formData.text=this.value">${esc(formData.text)}</textarea></div>`;
+  let toolHint='';if(formData.who[0]){const tp=getP(formData.who[0]);toolHint=(tp.tools&&tp.tools[formData.zone])||'';}
+  h+=`<div class="field"><label>什么帮到了我？（可选）${toolHint?`<span style="color:var(--light)"> · 工具箱：${esc(toolHint)}</span>`:''}</label><textarea placeholder="抱抱、深呼吸、喝水、安静一下……" oninput="formData.helped=this.value">${esc(formData.helped)}</textarea></div>`;
+  h+=`<div class="btn-row"><button class="btn btn-cancel" onclick="modal=null;document.querySelector('.modal-bg').remove()">取消</button>
+    <button class="btn btn-primary" onclick="saveE()">保存</button></div></div>`;
+  div.innerHTML=h;}
+
 /* ══ REPORT ══ */
 function rReport(el){
   const now=new Date(),y=now.getFullYear(),m=now.getMonth()+1;
@@ -294,7 +540,12 @@ function rReport(el){
   h+=`<div class="rpt-nav"><button class="${rptType==='week'?'active':''}" onclick="rptType='week';render()">周报</button>
     <button class="${rptType==='month'?'active':''}" onclick="rptType='month';render()">月报</button></div>`;
   h+=`<pre class="rpt-pre">${esc(genReport(dates,title))}</pre>`;
-  h+=`<button class="rpt-copy" id="cp-btn" onclick="copyRpt()">Hi Ai</button>`;h+=VALUES;el.innerHTML=h;}
+  h+=`<button class="rpt-copy" id="cp-btn" onclick="copyRpt()">Hi Ai</button>`;
+  h+=`<div class="data-sec"><div class="dt-title">数据管理</div><div class="data-btns">
+    <button class="data-btn" onclick="exportAll()">导出数据</button>
+    <button class="data-btn" onclick="$('#imp-f').click()">导入数据</button>
+    <button class="data-btn del" onclick="clearAll()">清除</button></div></div>`;
+  h+=VALUES;el.innerHTML=h;}
 function copyRpt(){const now=new Date(),y=now.getFullYear(),m=now.getMonth()+1;
   const dates=rptType==='week'?weekDates(today()):monDates(y,m);
   const r=genReport(dates,rptType==='week'?'周报':`${fmtMon(y,m)}月报`);
@@ -319,6 +570,7 @@ function rModal(){
   document.querySelectorAll('.modal-bg').forEach(e=>e.remove());if(!modal)return;
   const sec=gSec(modal);const div=document.createElement('div');div.className='modal-bg';
   div.onclick=e=>{if(e.target===div){modal=null;div.remove();}};
+  if(modal==='emotion'){buildEmotionModal(div);document.body.appendChild(div);return;}
   let h=`<div class="modal"><div class="modal-title">${sec.ico} 新记录</div>`;
   h+=`<div class="field"><label>日期</label><input type="date" value="${formData.date}" onchange="formData.date=this.value" max="${today()}"></div>`;
 
@@ -374,6 +626,7 @@ function saveE(){const sec=gSec(modal);if(!sec)return;const data=load(sec.key);c
   if(modal==='read'){e.who=formData.who;e.listener=formData.listener;e.book=formData.book;e.minutes=formData.minutes;e.level=formData.level;e.rating=formData.rating;e.comment=formData.comment;}
   else if(modal==='share'){if(!formData.text.trim())return;e.who=formData.who[0]||'mama';e.text=formData.text;}
   else if(modal==='wish'){if(!formData.text.trim())return;e.who=formData.who[0]||'mama';e.text=formData.text;e.done=false;e.photos=[];}
+  else if(modal==='emotion'){if(!formData.who[0]){alert('先选一下是谁哦～');return;}e.who=formData.who[0];e.zone=formData.zone;e.time=formData.time||'';e.place=formData.place||'';e.text=formData.text||'';e.helped=formData.helped||'';}
   else{e.who=formData.who;e.where=formData.where||'';e.text=formData.text;e.note=formData.note;e.photos=formData.photos||[];}
   data.push(e);save(sec.key,data);modal=null;document.querySelectorAll('.modal-bg').forEach(x=>x.remove());render();}
 
@@ -381,12 +634,12 @@ function delE(k,id){if(!confirm('删除这条记录？'))return;save(k,load(k).f
 function togWish(id){const d=load('xz_wish');const w=d.find(e=>e.id===id);if(w){w.done=!w.done;w.doneDate=w.done?today():null;if(!w.done)w.photos=[];}save('xz_wish',d);render();}
 
 /* ══ DATA ══ */
-function exportAll(){const d={version:3,exported:new Date().toISOString()};SECS.forEach(s=>{d[s.key]=load(s.key);});
+function exportAll(){const d={version:4,exported:new Date().toISOString()};SECS.forEach(s=>{d[s.key]=load(s.key);});d.xz_profile=loadP();
   const b=new Blob([JSON.stringify(d)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);
   a.download=`yunpingshi_${today()}.json`;a.click();URL.revokeObjectURL(a.href);}
 function importAll(file){const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);
-  SECS.forEach(s=>{if(d[s.key])save(s.key,d[s.key]);});render();alert('导入成功！');}catch(err){alert('导入失败');}};r.readAsText(file);}
-function clearAll(){if(confirm('确定清除所有数据？建议先导出备份。')){SECS.forEach(s=>localStorage.removeItem(s.key));render();}}
+  SECS.forEach(s=>{if(d[s.key])save(s.key,d[s.key]);});if(d.xz_profile)saveP(d.xz_profile);render();alert('导入成功！');}catch(err){alert('导入失败');}};r.readAsText(file);}
+function clearAll(){if(confirm('确定清除所有数据？建议先导出备份。')){SECS.forEach(s=>localStorage.removeItem(s.key));localStorage.removeItem('xz_profile');render();}}
 
 render();
 $('#imp-f').addEventListener('change',e=>{if(e.target.files[0])importAll(e.target.files[0]);e.target.value='';});
